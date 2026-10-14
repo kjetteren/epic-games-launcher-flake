@@ -66,7 +66,7 @@ Epic's `.deb` contains only the launcher binary, Epic's own EOS SDK library, ico
 
 ## Updates
 
-Epic serves the `.deb` from a URL that always points at the latest build, so the hash in `package.nix` goes stale with every release. A GitHub Actions workflow checks daily. When there's a new build, it updates `package.nix`, builds the package and commits the result. To pick up new builds, update the flake input:
+Epic's download link always redirects to the newest build's own URL. `package.nix` pins that URL rather than the link, so a locked version keeps building after Epic releases a newer one, as long as Epic keeps the old build online. A GitHub Actions workflow checks the link daily. When it points to a new build, the workflow updates `package.nix`, builds the package and commits the result. To pick up new builds, update the flake input:
 
 ```sh
 nix flake update epic-games-launcher

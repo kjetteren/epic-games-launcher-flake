@@ -36,6 +36,7 @@
             name = "update";
             runtimeInputs = with pkgs; [
               coreutils
+              curl
               dpkg
               gawk
               gnugrep

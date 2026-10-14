@@ -18,8 +18,10 @@ let
     pname = "${pname}-unwrapped";
     inherit version;
 
+    # The URL of this exact build, which Epic's download link redirects to.
+    # The link itself always serves the newest build.
     src = fetchurl {
-      url = "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncher-x86_64.deb";
+      url = "https://content-download-egs.distro.on.epicgames.com/Builds/EGLv2/0.95.2%2Bgfa9ad49/Linux/EpicGamesLauncher-x86_64.deb";
       hash = "sha256-jwa1J9CDTTlpL8tF1gRklMWkZ3XSKks8EcJgaz0XGDg=";
     };
 
