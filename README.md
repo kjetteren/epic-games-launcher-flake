@@ -78,6 +78,8 @@ If a new build changes the `.deb`'s dependencies or file layout, the workflow st
 
 To update by hand from a checkout, run `nix run .#update`.
 
+A second workflow moves `flake.lock` to the latest nixpkgs every week, if the package still builds with it. The NixOS module and the overlay build with your own nixpkgs instead, so this mainly matters for `nix run`.
+
 ## Known issues
 
 - **Playtime isn't published.** The launcher logs `No machine id available` and keeps playtime locally. This appears to be a limitation of Epic's Linux preview.

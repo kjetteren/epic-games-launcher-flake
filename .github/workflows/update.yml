@@ -8,7 +8,8 @@ on:
 permissions:
   contents: write
 
-# A manual run waits for a scheduled one instead of racing it to the push
+# Shared with update-nixpkgs.yml: runs of either workflow, manual or scheduled,
+# wait for each other instead of racing to the push
 concurrency:
   group: update
   cancel-in-progress: false

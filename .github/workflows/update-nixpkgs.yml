@@ -1,0 +1,49 @@
+name: Update nixpkgs
+
+on:
+  schedule:
+    - cron: "41 4 * * 1" # Mondays at 04:41 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Shared with update.yml: runs of either workflow, manual or scheduled, wait
+# for each other instead of racing to the push
+concurrency:
+  group: update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update flake.lock
+        id: update
+        run: |
+          nix flake update
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Keeps flake.lock on the old nixpkgs if the package doesn't build with
+      # the new one; the failed run is the signal that package.nix needs work
+      - name: Build with the new nixpkgs
+        if: steps.update.outputs.changed == 'true'
+        run: nix build .# -L
+
+      - name: Commit and push
+        if: steps.update.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "flake.lock: update nixpkgs"
+          git push
