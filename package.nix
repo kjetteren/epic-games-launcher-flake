@@ -110,8 +110,14 @@ buildFHSEnv {
 
   # nixpkgs' GLib only searches its own module directory, so point it at the
   # FHS one: glib-networking (TLS for the store) and dconf live there.
+  #
+  # The launcher's self-updater only handles .deb and AppImage installs. Under
+  # Nix it fails, showing an update-failed dialog whenever the installed
+  # version differs from Epic's current release, so switch it off: updates
+  # come through this flake.
   profile = ''
     export GIO_EXTRA_MODULES=/usr/lib/gio/modules
+    export EGL_DISABLE_SELF_UPDATE=1
   '';
 
   runScript = "${unwrapped}/bin/EpicGamesLauncher";

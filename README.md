@@ -72,7 +72,7 @@ Epic's download link always redirects to the newest build's own URL. `package.ni
 nix flake update epic-games-launcher
 ```
 
-The launcher's built-in updater doesn't apply under Nix.
+The launcher's built-in updater can't update a Nix install, so the package switches it off with `EGL_DISABLE_SELF_UPDATE=1`. Without that, the launcher shows an update-failed dialog whenever its version differs from Epic's current release.
 
 If a new build changes the `.deb`'s dependencies or file layout, the workflow stops without committing. Those changes would still build but break the launcher at runtime, so they need a manual look.
 
