@@ -9,7 +9,7 @@
 
 let
   pname = "epic-games-launcher";
-  version = "0.96.1";
+  version = "0.97.0";
 
   # Epic's .deb ships only its own files: the launcher binary, the EOS SDK
   # library in /usr/lib/epic-games-launcher, icons and a desktop file. Every
@@ -21,8 +21,8 @@ let
     # The URL of this exact build, which Epic's download link redirects to.
     # The link itself always serves the newest build.
     src = fetchurl {
-      url = "https://content-download-egs.distro.on.epicgames.com/Builds/EGLv2/0.96.1%2Bge3e236d/Linux/EpicGamesLauncher-x86_64.deb";
-      hash = "sha256-+779DTWJpd7m7D0ioPHtNvC8Gb+Lyni/5p+FkTWs1s8=";
+      url = "https://content-download-egs.distro.on.epicgames.com/Builds/EGLv2/0.97.0%2Bg4f63cc1/Linux/EpicGamesLauncher-x86_64.deb";
+      hash = "sha256-uiGWScRC89+GnwHQmnc1Jjc384xs79S2m3CKAYkFGMM=";
     };
 
     # dpkg's setup hook unpacks the .deb into ./root
