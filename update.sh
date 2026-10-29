@@ -29,8 +29,10 @@ current_hash=$(sed -nE 's/^ *hash = "([^"]+)";$/\1/p' "$file")
 # build's own URL. package.nix pins the build's URL instead of the link, so it
 # doesn't break as soon as Epic releases something newer.
 url=$(curl -fsS --retry 3 -o /dev/null -w '%{redirect_url}' "$latest_url")
-# Drop the query string (?launcherfilename=...), a download name hint
+# Drop the query string (?launcherfilename=...), a download name hint, and
+# the redirect's extra encoding of the build's + (%252B -> %2B)
 url=${url%%\?*}
+url=${url//%25/%}
 
 # The URL goes into package.nix as is, so allow only characters that are safe
 # there and in the sed replacement below
